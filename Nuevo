@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Descarga de Historial Clínico</title>
+</head>
+<body>
+    <h1>Descarga tu Historial Clínico</h1>
+    <form id="download-form">
+        <label for="codigo">Ingresa tu código:</label>
+        <input type="text" id="codigo" name="codigo" required>
+        <button type="submit">Descargar</button>
+    </form>
+    <p id="mensaje"></p>
+    <script>
+        document.getElementById('download-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const codigo = document.getElementById('codigo').value;
+            // URL base donde se almacenan los PDFs
+            const baseUrl = 'https://tu-servidor-de-pdfs.com/';
+            const pdfUrl = `${baseUrl}${codigo}.pdf`;
+            fetch(pdfUrl).then(response => {
+                if (response.status === 200) {
+                    window.location.href = pdfUrl;
+                } else {
+                    document.getElementById('mensaje').textContent = 'Código no válido o archivo no encontrado.';
+                }
+            }).catch(error => {
+                document.getElementById('mensaje').textContent = 'Error al intentar descargar el archivo.';
+            });
+        });
+    </script>
+</body>
+</html>
